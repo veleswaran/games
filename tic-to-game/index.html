@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic-Tac-Toe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('./background.png');
+        }
+
+        h1{
+            margin-left: 20%;
+            width: 60%;
+            border-radius: 10px;
+            background-color: rgb(131, 209, 233);
+        }
+        .board {
+            background-color: blue;
+            padding: 10px;
+            border:2px solid black;
+            margin-left:30%;
+            width: 40%;
+            height: 500px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+        }
+
+        .cell {
+            /* Set the width */
+            height:150px; /* Set the height */
+            background-color: yellow;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .img {
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    <div class="board" id="board">
+        <div class="cell" onclick="makeMove(0)"><img class="img"></div>
+        <div class="cell" onclick="makeMove(1)"><img class="img"></div>
+        <div class="cell" onclick="makeMove(2)"><img class="img"></div>
+        <div class="cell" onclick="makeMove(3)"><img class="img"></div>
+        <div class="cell" onclick="makeMove(4)"><img class="img"></div>
+        <div class="cell" onclick="makeMove(5)"><img class="img"></div>
+        <div class="cell" onclick="makeMove(6)"><img class="img"></div>
+        <div class="cell" onclick="makeMove(7)"><img class="img"></div>
+        <div class="cell" onclick="makeMove(8)"><img class="img"></div>
+    </div>
+
+
+    <script>
+        var board = ['', '', '', '', '', '', '', '', ''];
+        var currentPlayer = 'X';
+        var gameOver = false;
+        var messageElement = document.getElementById('message');
+
+        function makeMove(cellIndex) {
+            if (!gameOver && board[cellIndex] === '') {
+                board[cellIndex] = currentPlayer;
+                var img = document.getElementsByClassName('img')[cellIndex];
+                img.src = (currentPlayer === 'X') ? 'Xsvg.png' : 'O.png';
+                checkWin();
+                currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
+            }
+        }
+
+        function checkWin() {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6]             // Diagonals
+            ];
+
+            for (let pattern of winPatterns) {
+                const [a, b, c] = pattern;
+                if (board[a] && board[a] === board[b] && board[b] === board[c]) {
+                    alert(currentPlayer + ' wins!');
+                    gameOver = true;
+                }
+            }
+
+            if (!board.includes('') && !gameOver) {
+                alert('It\'s a draw!');
+                gameOver = true;
+            }
+        }
+    </script>
+</body>
+</html>
